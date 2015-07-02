@@ -63,25 +63,20 @@ describe Calculator do
   end
 
   describe '#memory=' do
-    # before {c = Calculator.instance_variable_get(:@c)}
     it 'memory= should be nil if object has no value' do
-      expect(c.memory=(Calculator.instance_variable_get(:@c))).to be(nil)
+      expect(c.instance_variable_get(:@memory)).to be(nil)
     end
 
     it 'memory= sets object value' do
-      expect(c.memory=(8)).to be(8)
+      expect(c.memory=(8)).to be(c.memory)
     end
+  end
 
-    before {c.memory=(8)}
-    it 'should return the value of the object' do
-       expect(c.memory).to be(8)
-       #expect(c.memory=(Calculator.instance_variable_get(:@c))).to be(8)
+  describe '#memory' do
+    it 'memory should return the stored value' do
+      c.memory=(8)
+      expect(c.memory).to be(8)
     end
-
-    it 'memory= should be nil if object has no value' do
-      expect(c.memory=(Calculator.instance_variable_get(:@c))).to be(nil)
-    end
-
   end
 
   let (:c2){Calculator.new(true)}
@@ -93,7 +88,6 @@ describe Calculator do
   	it 'should return a string class' do
        expect(c2.add(1,2).class).to be(String)
     end
-
   end
 
 end
