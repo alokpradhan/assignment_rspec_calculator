@@ -28,7 +28,6 @@ describe Calculator do
 		end
 	end
 
-
 	describe '#divide' do
 		it 'divides two numbers' do
 			expect(c.divide(4,2)).to be(2)
@@ -59,25 +58,42 @@ describe Calculator do
     end
 
     it 'square root from negative gives an error' do
-      expect(c.sqrt(-1)).to raise_error(ArgumentError)
+      expect{(c.sqrt(-1))}.to raise_error(ArgumentError)
     end
   end
 
   describe '#memory=' do
-    before {c = Calculator.new(8)}
-      
-
-    it 'memory= stores an object' do
-      expect(c.memory=).to be(8)
+    # before {c = Calculator.instance_variable_get(:@c)}
+    it 'memory= should be nil if object has no value' do
+      expect(c.memory=(Calculator.instance_variable_get(:@c))).to be(nil)
     end
-  end
-  
-  describe '#memory should eq nil' do
-    it 'square root of simple number' do
-      #expect(c.sqrt(9.0)).to be(3)
+
+    it 'memory= sets object value' do
+      expect(c.memory=(8)).to be(8)
     end
+
+    before {c.memory=(8)}
+    it 'should return the value of the object' do
+       expect(c.memory).to be(8)
+       #expect(c.memory=(Calculator.instance_variable_get(:@c))).to be(8)
+    end
+
+    it 'memory= should be nil if object has no value' do
+      expect(c.memory=(Calculator.instance_variable_get(:@c))).to be(nil)
+    end
+
   end
 
+  let (:c2){Calculator.new(true)}
+  describe '#add' do
+    it 'should return a string result' do
+       expect(c2.add(1,2)).to eq("3")
+    end
 
+  	it 'should return a string class' do
+       expect(c2.add(1,2).class).to be(String)
+    end
+
+  end
 
 end
